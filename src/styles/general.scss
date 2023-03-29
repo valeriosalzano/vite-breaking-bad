@@ -1,0 +1,16 @@
+@use 'bootstrap';
+@use './partials/variables' as *;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: $body-bg-color;
+  color: $body-text-color;
+}
+
+main {
+  background-color: $main-bg-color;
+}
