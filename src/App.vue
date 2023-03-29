@@ -5,6 +5,7 @@ import { store } from './store/store.js';
 
 import TheHeader from './components/TheHeader.vue';
 import FilterBar from './components/FilterBar.vue';
+import SearchResults from './components/SearchResults.vue';
 import CardsList from './components/CardsList.vue';
 import LoadingPage from './components/LoadingPage.vue';
 
@@ -12,6 +13,7 @@ export default {
   components: {
     TheHeader,
     FilterBar,
+    SearchResults,
     CardsList,
     LoadingPage,
   },
@@ -52,6 +54,7 @@ export default {
 
     <main class="py-3">
       <FilterBar></FilterBar>
+      <SearchResults :results="store.cardsData.length"></SearchResults>
       <CardsList></CardsList>
     </main>
 

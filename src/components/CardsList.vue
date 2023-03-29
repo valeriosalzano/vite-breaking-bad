@@ -1,6 +1,5 @@
 <template>
-  <div class="cards-list container my-5">
-
+  <div class="cards-list container my-4">
     <div class="row d-flex flex-wrap g-3">
       <div v-for=" (card, index) in store.cardsData" class="col-3" :key="index">
         <Card :cardData="card"></Card>
