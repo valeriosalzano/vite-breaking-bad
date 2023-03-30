@@ -29,6 +29,7 @@ export default {
       this.store.loading = true;
 
       let apiUrl = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
+      let modifiedUrl = false;
       
       // filters check
       Object.keys(this.store.searchFilter).forEach((key,index) => {
@@ -36,8 +37,12 @@ export default {
         // se il valore della key è una stringa vuota non aggiungo filtri all'url
         if (this.store.searchFilter[key] !== ''){
           // alla prima aggiunta inserisco il "?" poi "&" ai seguenti nell'url
-          !index ? apiUrl += '?' : apiUrl += '&';
-
+          if (modifiedUrl == false){
+            apiUrl += '?';
+            modifiedUrl = true;
+          } else {
+            apiUrl += '&';
+          }
           apiUrl += `${key}=${this.store.searchFilter[key]}`;
         }
       });

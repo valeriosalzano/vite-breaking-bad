@@ -4,9 +4,9 @@ export const store = reactive({
   cardsData: [],
   cardsArchetypes : [],
   searchFilter : {
+    archetype: '',
     num : 20,
     offset : 0,
-    archetype: '',
   },
   loading: true,
 });
