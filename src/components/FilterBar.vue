@@ -1,15 +1,22 @@
 <template>
   <div class="filter-bar container d-flex justify-content-between">
-    <select class="form-select text-bg-dark" id="filter-bar-select" v-model="store.searchFilter.archetype" @change="$emit('filterChange')">
+    <select class="form-select text-bg-dark" id="filter-bar-archetype" v-model="store.searchFilter.archetype" @change="$emit('filterChangeArchetype')">
       <option value=""> All Archetypes </option>
       <option v-for="archetype in store.cardsArchetypes" :value="archetype.archetype_name">{{ archetype.archetype_name }}</option>
     </select>
+
+    <select class="form-select text-bg-dark" id="filter-bar-limit" v-model="store.searchFilter.num" @change="$emit('filterChangeLimit')">
+      <option value="24"> 24 </option>
+      <option value="30"> 30 </option>
+      <option value="50"> 50 </option>
+      <option value="100"> 100 </option>
+    </select>
+
   </div>
 </template>
 
 <script>
 import { store } from '../store/store.js';
-import axios from 'axios';
 
 export default {
   name: 'Filter Bar',

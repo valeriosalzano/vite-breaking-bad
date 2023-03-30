@@ -5,7 +5,7 @@ export const store = reactive({
   cardsArchetypes : [],
   searchFilter : {
     archetype: '',
-    num : 20,
+    num : 24,
     offset : 0,
   },
   loading: true,

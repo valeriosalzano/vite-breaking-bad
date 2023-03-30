@@ -25,14 +25,51 @@ export default {
     this.getArchetypes()
   },
   methods: {
+    verifyChange(){
+      // verifico se sto solo riducendo il numero di carte visibili
+      let prevLimit = this.store.cardsData.length;
+      let nextLimit = this.store.searchFilter.num;
+
+      if (prevLimit > nextLimit){
+        // CASO A: sto riducendo gli elementi, elimino le carte in eccesso
+      this.store.cardsData.splice(nextLimit,prevLimit-nextLimit)
+      } else {
+        // CASO B: sto aumentando il numero di elementi, cerco di caricare solo quelli che non ho
+        this.store.searchFilter.offset = prevLimit;
+        this.store.searchFilter.num = nextLimit - prevLimit;
+
+        let apiUrl = this.generateApiUrl();
+
+        this.store.loading = true;
+        axios.get(apiUrl)
+          .then( response => {
+            // inserisco i nuovi elementi generati in cardsData
+          response.data.data.forEach(card => { this.store.cardsData.push(card); })
+          // resetto i valori dei filtri
+          this.store.searchFilter.num = nextLimit;
+          this.store.searchFilter.offset = 0;
+          setTimeout(()=> this.store.loading = false,1000);
+        });
+
+      }
+    },
     getCards(){
       this.store.loading = true;
 
+      let apiUrl = this.generateApiUrl();
+      
+      axios.get(apiUrl)
+      .then( response => {
+        this.store.cardsData = response.data.data;
+        setTimeout(()=> this.store.loading = false,1000);
+      });
+    },
+    generateApiUrl(){
       let apiUrl = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
       let modifiedUrl = false;
       
       // filters check
-      Object.keys(this.store.searchFilter).forEach((key,index) => {
+      Object.keys(this.store.searchFilter).forEach(key => {
         
         // se il valore della key è una stringa vuota non aggiungo filtri all'url
         if (this.store.searchFilter[key] !== ''){
@@ -46,12 +83,8 @@ export default {
           apiUrl += `${key}=${this.store.searchFilter[key]}`;
         }
       });
-      
-      axios.get(apiUrl)
-      .then( response => {
-        this.store.cardsData = response.data.data;
-        setTimeout(()=> this.store.loading = false,1000);
-      });
+
+      return apiUrl;
     },
     getArchetypes(){
       axios.get('https://db.ygoprodeck.com/api/v7/archetypes.php')
@@ -72,7 +105,7 @@ export default {
     </header>
 
     <main class="py-3">
-      <FilterBar @filterChange="getCards"></FilterBar>
+      <FilterBar @filterChangeArchetype="getCards" @filterChangeLimit="verifyChange"></FilterBar>
       <SearchResults></SearchResults>
       <CardsList></CardsList>
     </main>
