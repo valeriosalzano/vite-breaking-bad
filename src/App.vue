@@ -40,6 +40,9 @@ export default {
     },
     getImgPath(img){
       return new URL (`../assets/images/${img}`,import.meta.url).href;
+    },
+    doSomething(){
+      console.log('emit working. Hooray!')
     }
   },
 }
@@ -53,8 +56,8 @@ export default {
     </header>
 
     <main class="py-3">
-      <FilterBar></FilterBar>
-      <SearchResults :results="store.cardsData.length"></SearchResults>
+      <FilterBar @filterChange="doSomething"></FilterBar>
+      <SearchResults></SearchResults>
       <CardsList></CardsList>
     </main>
 

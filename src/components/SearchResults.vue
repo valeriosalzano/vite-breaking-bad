@@ -1,16 +1,24 @@
 <template>
   <div class="search-results container mt-5">
-    <p class="py-3 ps-4 fs-3 text-bg-dark rounded">Found {{ results }} cards.</p>
+    <p class="py-3 ps-4 fs-3 text-bg-dark rounded">Found {{ computedResults }} cards.</p>
   </div>
 </template>
 
 <script>
+import { store } from '../store/store.js';
 
 export default {
   name: 'Search Results',
-  props: {
-    results: Number,
-  }
+  data() {
+    return {
+      store,
+    }
+  },
+  computed: {
+    computedResults(){
+      return this.store.cardsData.length;
+    }
+  },
 }
 </script>
 
