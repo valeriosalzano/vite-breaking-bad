@@ -28,6 +28,8 @@ export default {
   },
   methods: {
     getCards(){
+      this.store.loading = true;
+
       let apiUrl = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
       
       // filters check
