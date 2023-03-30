@@ -3,7 +3,7 @@
     <img class="img-fluid" :src="computedImg" :alt="computedName">
     <div class="card-text text-bg-dark text-center position-relative px-3 pb-5 h-100 rounded-bottom">
       <h3 class="py-3">{{ computedName }}</h3>
-      <h5 class="position-absolute bottom-0 start-50 translate-middle">{{ computedArchetype }}</h5>
+      <h5 class="position-absolute bottom-0 start-50 translate-middle-x w-100">{{ computedArchetype }}</h5>
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
       return this.cardData.name;
     },
     computedArchetype(){
-      return this.cardData.archetype;
+      return this.cardData.archetype? this.cardData.archetype : 'No archetype' ;
     }
   }
 }

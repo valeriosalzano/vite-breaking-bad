@@ -28,7 +28,21 @@ export default {
   },
   methods: {
     getCards(){
-      axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0')
+      let apiUrl = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
+      
+      // filters check
+      Object.keys(this.store.searchFilter).forEach((key,index) => {
+        
+        // se il valore della key è una stringa vuota non aggiungo filtri all'url
+        if (this.store.searchFilter[key] !== ''){
+          // alla prima aggiunta inserisco il "?" poi "&" ai seguenti nell'url
+          !index ? apiUrl += '?' : apiUrl += '&';
+
+          apiUrl += `${key}=${this.store.searchFilter[key]}`;
+        }
+      });
+      
+      axios.get(apiUrl)
       .then( response => {
         this.store.cardsData = response.data.data;
         setTimeout(()=> this.store.loading = false,1000);
@@ -41,9 +55,6 @@ export default {
     getImgPath(img){
       return new URL (`../assets/images/${img}`,import.meta.url).href;
     },
-    doSomething(){
-      console.log('emit working. Hooray!')
-    }
   },
 }
 </script>
@@ -56,7 +67,7 @@ export default {
     </header>
 
     <main class="py-3">
-      <FilterBar @filterChange="doSomething"></FilterBar>
+      <FilterBar @filterChange="getCards"></FilterBar>
       <SearchResults></SearchResults>
       <CardsList></CardsList>
     </main>

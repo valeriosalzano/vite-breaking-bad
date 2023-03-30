@@ -1,7 +1,7 @@
 <template>
   <div class="filter-bar container d-flex justify-content-between">
     <select class="form-select text-bg-dark" id="filter-bar-select" v-model="store.searchFilter.archetype" @change="$emit('filterChange')">
-      <option value=""> Default </option>
+      <option value=""> All Archetypes </option>
       <option v-for="archetype in store.cardsArchetypes" :value="archetype.archetype_name">{{ archetype.archetype_name }}</option>
     </select>
   </div>
