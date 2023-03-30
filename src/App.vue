@@ -32,24 +32,35 @@ export default {
 
       if (prevLimit > nextLimit){
         // CASO A: sto riducendo gli elementi, elimino le carte in eccesso
-      this.store.cardsData.splice(nextLimit,prevLimit-nextLimit)
+      this.store.cardsData.splice(nextLimit,prevLimit-nextLimit);
+      this.store.lastReached = false;
       } else {
         // CASO B: sto aumentando il numero di elementi, cerco di caricare solo quelli che non ho
         this.store.searchFilter.offset = prevLimit;
+
+        //controllo di non aver caricato già tutte le disponibili, in quel caso interrompo
+        if(this.store.lastReached = true ){
+          return
+        }
+
         this.store.searchFilter.num = nextLimit - prevLimit;
 
         let apiUrl = this.generateApiUrl();
 
         this.store.loading = true;
         axios.get(apiUrl)
-          .then( response => {
-            // inserisco i nuovi elementi generati in cardsData
+        .then( response => {
+          // inserisco i nuovi elementi generati in cardsData
           response.data.data.forEach(card => { this.store.cardsData.push(card); })
+          // controllo se ho caricato fino all'ultima card
+          if(this.store.cardsData.length < nextLimit){
+            this.store.lastReached = true;
+          }
           // resetto i valori dei filtri
           this.store.searchFilter.num = nextLimit;
           this.store.searchFilter.offset = 0;
           setTimeout(()=> this.store.loading = false,1000);
-        });
+        })
 
       }
     },

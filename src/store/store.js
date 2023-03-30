@@ -8,5 +8,6 @@ export const store = reactive({
     num : 24,
     offset : 0,
   },
+  lastReached : false,
   loading: true,
 });
