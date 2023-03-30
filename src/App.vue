@@ -7,7 +7,6 @@ import TheHeader from './components/TheHeader.vue';
 import FilterBar from './components/FilterBar.vue';
 import SearchResults from './components/SearchResults.vue';
 import CardsList from './components/CardsList.vue';
-import LoadingPage from './components/LoadingPage.vue';
 
 export default {
   components: {
@@ -15,7 +14,6 @@ export default {
     FilterBar,
     SearchResults,
     CardsList,
-    LoadingPage,
   },
   data() {
     return {
@@ -63,7 +61,7 @@ export default {
 
 <template>
   <div class="app-wrapper">
-    <LoadingPage></LoadingPage>
+    
     <header>
       <TheHeader title='Yu-Gi-Oh API'></TheHeader>
     </header>

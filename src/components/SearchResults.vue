@@ -1,6 +1,6 @@
 <template>
   <div class="search-results container mt-5">
-    <p class="py-3 ps-4 fs-3 text-bg-dark rounded">Found {{ computedResults }} cards.</p>
+    <p class="py-3 ps-4 display-5 text-bg-dark rounded-5">Found {{ computedResults }} cards.</p>
   </div>
 </template>
 
