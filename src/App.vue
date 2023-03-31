@@ -36,13 +36,12 @@ export default {
       this.store.lastReached = false;
       } else {
         // CASO B: sto aumentando il numero di elementi, cerco di caricare solo quelli che non ho
-        this.store.searchFilter.offset = prevLimit;
-
         //controllo di non aver caricato già tutte le disponibili, in quel caso interrompo
-        if(this.store.lastReached = true ){
+        if(this.store.lastReached == true ){
           return
         }
 
+        this.store.searchFilter.offset = prevLimit;
         this.store.searchFilter.num = nextLimit - prevLimit;
 
         let apiUrl = this.generateApiUrl();
@@ -72,6 +71,13 @@ export default {
       axios.get(apiUrl)
       .then( response => {
         this.store.cardsData = response.data.data;
+        // controllo se ho caricato fino all'ultima card
+        if(this.store.cardsData.length < this.store.searchFilter.num){
+          this.store.lastReached = true;
+        } else {
+          this.store.lastReached = false;
+        }
+
         setTimeout(()=> this.store.loading = false,1000);
       });
     },
